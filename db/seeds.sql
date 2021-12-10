@@ -1,27 +1,28 @@
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO departments (id, name)
 VALUES
-  ('Pandora', 'Boxx', 1, 1),
-  ('Manila', 'Luzon', 1, 1),
-  ('Latrice', 'Royale', 2, 5),
-  ('Jiggly', 'Caliente', 2, 3),
-  ('Alisa', 'Summers', 3, 2),
-  ('Alyssa', 'Edwards', 3, 4),
-  ('Yvie', 'Oddly', 4, 3),
-  ('Plastique', 'Tiara', 4, 3),
-  ('Gigi', 'Goode', 5, 2),
+  (1, 'Sales'),
+  (2, 'Marketing'),
+  (3, 'Finance'),
+  (4, 'Operations'),
+  (5, 'HR');
+
 
 INSERT INTO roles (title, salary, department_id)
 VALUES
-  ('Singer', 3000, 1),
-  ('Performer', 3500, 3),
-  ('Actress', 3800, 1),
-  ('Dancer', 2200, 2),
-  ('Comedian', 4000, 4);
+  ('Singer', 1500, 1),
+  ('Dancer', 1800, 3),
+  ('Performer', 2000, 1),
+  ('Comedian', 2300, 2),
+  ('Actress', 5000, 4);
 
-  INSERT INTO department (id, name)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
-  (1, 'Glamour'),
-  (2, 'Beauty'),
-  (3, 'Talent'),
-  (4, 'Fierce'),
-  (5, 'Power');
+  ('Pandora', 'Boxx', 1, 1),
+  ('Manila', 'Luzon', 2, 2),
+  ('Latrice', 'Royale', 3, 3),
+  ('Jiggly', 'Caliente', 4, 3),
+  ('Alisa', 'Summers', 5, 2),
+  ('Alyssa', 'Edwards', 4, 1),
+  ('Yvie', 'Oddly', 4, 3),
+  ('Plastique', 'Tiara', 5, 3),
+  ('Gigi', 'Goode', 4, 2);
