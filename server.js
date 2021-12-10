@@ -82,15 +82,30 @@ function allEmployees(){
 }
 
 function allDepartments(){
-
+    const sql = `SELECT * FROM departments`
+    db.query(sql, (err, res) => {
+        if (err) throw err
+        console.table(res)
+        promptUser()
+      });
 }
 
 function allRoles(){
-
+    const sql = `SELECT * FROM roles`
+    db.query(sql, (err, res) => {
+        if (err) throw err
+        console.table(res)
+        promptUser()
+      });
 }
 
 function addDepartment(){
-
+    const sql = `SELECT * FROM departments`
+    db.query(sql, (err, res) => {
+        if (err) throw err
+        console.table(res)
+        promptUser()
+      });
 }
 
 function addEmployee(){
