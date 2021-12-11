@@ -33,6 +33,7 @@ function promptUser() {
             'Add a department',
             'Add a role',
             'Update the employee role',
+            'Update the employee manager',
             'Delete an employee',
             'Delete a department',
             'Delete a role',
@@ -67,6 +68,10 @@ function promptUser() {
 
             case 'Update the employee role':
                 updateRole();
+            break;
+
+            case 'Update the employee manager':
+                updateManager();
             break;
 
             case 'Delete an employee':
@@ -219,6 +224,7 @@ function addRole(){
     })
 }
 
+// Update role
 function updateRole(){
 
    const sql = `SELECT * FROM employee`;
@@ -249,7 +255,7 @@ function updateRole(){
                     {
                     type: 'list',
                     name: 'role',
-                    message: 'select role',
+                    message: 'Choose the new role.',
                     choices: role,
                     }
                 ]).then(ans =>{
@@ -269,8 +275,51 @@ function updateRole(){
     }
 )}
 
+// Update Manager
+function updateManager(){
+    const sql = `SELECT * FROM employee ORDER BY last_name`;
+    db.query(sql, (err, res) => {
+        if (err) throw err
+        const employee = res.map(({ id, first_name, last_name }) => ({
+         value: id,
+         name: `${first_name} ${last_name}`,
+       }));
+             return inquirer.prompt([
+             {
+                 name: 'title',
+                 type: 'list',
+                 message: 'Choose the employee to update the manager.',
+                 choices: employee
+             },
+         ]).then(answers => {
+             const sql = `SELECT * FROM employee`;
+             db.query(sql, (err, res) => {
+                 if (err) throw err
+                     const manager = res.map(({ id, first_name, last_name }) => ({
+                        value: id,
+                        name: `${first_name} ${last_name}`,
+                 }));
+                 return inquirer.prompt([
+                     {
+                     type: 'list',
+                     name: 'manager',
+                     message: 'Choose the manager.',
+                     choices: manager,
+                     }
+                 ]).then(answer =>{
+                         const sql = `UPDATE employee SET manager_id = ? WHERE id = ?`;
+                         const params = [answer.manager, answers.title]
+                         db.query(sql, params, (err, res) => {
+                           if (err) throw err;
+                           promptUser();
+                         });
+                 })
+             })
+         })
+    })
+}
 
-
+// Delete employee
 function deleteEmployee(){
     const sql = `SELECT * FROM employee`;
     db.query(sql, (err, res) => {
@@ -300,6 +349,7 @@ function deleteEmployee(){
     })
 }
 
+// Delete department
 function deleteDepartment(){
     const sql = `SELECT * FROM departments`;
     db.query(sql, (err, res) => {
@@ -329,6 +379,7 @@ function deleteDepartment(){
     })
 }
 
+// Delete Role
 function deleteRole(){
     const sql = `SELECT * FROM roles`;
     db.query(sql, (err, res) => {
