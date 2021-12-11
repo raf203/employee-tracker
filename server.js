@@ -37,6 +37,7 @@ function promptUser() {
             'Delete an employee',
             'Delete a department',
             'Delete a role',
+            'View employees by department',
             'Exit'
             ]
     }
@@ -84,6 +85,10 @@ function promptUser() {
 
             case 'Delete a role':
                 deleteRole();
+            break;
+
+            case 'View employees by department':
+                viewByDepartment();
             break;
 
             case 'Exit':
@@ -411,3 +416,14 @@ function deleteRole(){
     })
 }
 
+// View employees by department
+function viewByDepartment(){
+    const sql = `SELECT employee.first_name, employee.last_name, departments.id as department_id, departments.name as department_name FROM employee 
+    LEFT JOIN roles ON employee.role_id = roles.id
+    LEFT JOIN departments ON roles.department_id = departments.id  ORDER BY department_id;`;
+    db.query(sql, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      promptUser();
+    });
+}
