@@ -38,6 +38,7 @@ function promptUser() {
             'Delete a department',
             'Delete a role',
             'View employees by department',
+            'View the total budget of a department',
             'Exit'
             ]
     }
@@ -89,6 +90,10 @@ function promptUser() {
 
             case 'View employees by department':
                 viewByDepartment();
+            break;
+
+            case 'View the total budget of a department':
+                viewBudget();
             break;
 
             case 'Exit':
@@ -316,6 +321,9 @@ function updateManager(){
                          const params = [answer.manager, answers.title]
                          db.query(sql, params, (err, res) => {
                            if (err) throw err;
+                           console.log("--------");
+                           console.log("Success!");
+                           console.log("--------");
                            promptUser();
                          });
                  })
@@ -426,4 +434,17 @@ function viewByDepartment(){
       console.table(res);
       promptUser();
     });
+}
+
+// View total budget of department
+function viewBudget(){
+    const sql = `SELECT departments.id, departments.name, SUM(roles.salary) AS total FROM employee 
+    LEFT JOIN roles ON employee.role_id = roles.id
+    LEFT JOIN departments ON roles.department_id = departments.id
+    GROUP BY departments.id, departments.name ORDER BY departments.id`
+     db.query(sql, (err, res) => {
+              if (err) throw err;
+              console.table(res);
+              promptUser();
+            });            
 }
